@@ -1,0 +1,22 @@
+model User {
+id Int @id @default(autoincrement())
+email String @unique
+passwordHash String
+reservas Reserva[] // Relacionamento com as reservas
+}
+
+model Mesa {
+id Int @id @default(autoincrement())
+numero Int @unique
+capacidade Int
+reservas Reserva[]
+}
+
+model Reserva {
+id Int @id @default(autoincrement())
+data DateTime @default(now())
+userId Int
+mesaId Int
+user User @relation(fields: [userId], references: [id])
+mesa Mesa @relation(fields: [mesaId], references: [id])
+}
